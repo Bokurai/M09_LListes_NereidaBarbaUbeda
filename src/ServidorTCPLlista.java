@@ -10,13 +10,4 @@ import java.util.logging.Logger;
 
 public class ServidorTCPLlista {
 
-        int PORT;
-
-
-
-
-        public static void main(String[] args) {
-               ServidorTCPLlista servidorTCPLlista = new ServidorTCPLlista(5558);
-               servidorTCPLlista.listen();
-        }
 }
