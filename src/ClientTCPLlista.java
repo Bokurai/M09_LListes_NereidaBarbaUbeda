@@ -5,6 +5,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static jdk.internal.net.http.common.Utils.close;
 
@@ -68,5 +70,25 @@ public class ClientTCPLlista extends Thread {
 
     private String getRequest(String serverData) {
         return "hola";
+    }
+
+    private void close(Socket socket){
+        //si falla el tancament no podem fer gaire cosa, només enregistrar
+        //el problema
+        try {
+            //tancament de tots els recursos
+            if(socket!=null && !socket.isClosed()){
+                if(!socket.isInputShutdown()){
+                    socket.shutdownInput();
+                }
+                if(!socket.isOutputShutdown()){
+                    socket.shutdownOutput();
+                }
+                socket.close();
+            }
+        } catch (IOException ex) {
+            //enregistrem l'error amb un objecte Logger
+            Logger.getLogger(ClientTCPLlista.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
