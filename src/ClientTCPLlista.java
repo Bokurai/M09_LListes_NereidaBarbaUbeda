@@ -12,6 +12,7 @@ import static jdk.internal.net.http.common.Utils.close;
 
 public class ClientTCPLlista extends Thread {
 
+    private String nom;
     boolean continueConnected;
     Llista llista;
     Socket socket;
@@ -68,10 +69,6 @@ public class ClientTCPLlista extends Thread {
         return new Llista(nom, num);
     }
 
-    private String getRequest(String serverData) {
-        return "hola";
-    }
-
     private void close(Socket socket){
         //si falla el tancament no podem fer gaire cosa, només enregistrar
         //el problema
@@ -90,5 +87,19 @@ public class ClientTCPLlista extends Thread {
             //enregistrem l'error amb un objecte Logger
             Logger.getLogger(ClientTCPLlista.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static void main(String[] args) {
+        String persona, ipServ;
+
+        System.out.println("IP servidor: ");
+        Scanner sc = new Scanner(System.in);
+        ipServ = sc.next();
+        System.out.println("El teu nom: ");
+        persona = sc.next();
+
+        ClientTCPLlista clientTCPLlista = new ClientTCPLlista(ipServ, 5558);
+        clientTCPLlista.nom = persona;
+        clientTCPLlista.start();
     }
 }
